@@ -8,16 +8,27 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./css/style.css">
   
 </head>
 
-<body>
-    <div class="header">
-        <audio controls>
-            <source src="./sound/Beach Chill Out. Snoot Game OST.mp3" >
-        </audio>
+<body id="main_container">
+    
+
+    <div class="audio-player" id="draggablePlayer">
+        <select id="trackSelector">
+            <option value="sound/Appreciating the Scenery. Snoot Game OST.mp3">Appreciating the Scenery</option>
+            <option value="sound/Beach Chill Out. Snoot Game OST.mp3">Beach Chill Out</option>
+            <option value="sound/Bayside Bumming it. Snoot Game OST.mp3">Bayside Bumming it. Snoot Game OST</option>
+
+        </select>
+        <br><br>
+        <button id="playPause">Play</button>
+        
+        <input class="range_vol" type="range" id="volumeControl" min="0" max="1" step="0.1" value="1">
+        <audio id="audioPlayer" loop  src="sound/Appreciating the Scenery. Snoot Game OST.mp3"></audio>
     </div>
+
     <div class="game-container">
         <div class="main-section"  id="particleContainer">
             <div class="cookie-container">
@@ -31,6 +42,8 @@
                 <div>CPS: <span id="cps">0</span></div>
                 <div>Click Power: <span id="clickPower">1</span></div>
             </div>
+
+            <img src="./img/fang_coockie.gif" alt="fang_eating_dinonuggets" class="icon_image">
         </div>
         <div class="store-section">
             <h2>Kitchen</h2>
@@ -38,9 +51,10 @@
         </div>
     </div>
 
-    <script src="./script.js">
-    
-    </script>
+    <script src="./js/cheet.min.js"></script>
+    <script src="./js/audio.js"></script>
+
+    <script src="./js/script.js"></script>
 </body>
 
 </html>
