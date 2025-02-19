@@ -166,37 +166,62 @@ class Game {
     this.saveGame();
   }
 
-  toggleFangMode() {
-    this.isFangMode = !this.isFangMode;
-    
-    const fangImage = document.querySelector(".icon_image"); // Select existing image
-    // Update main cookie image
-    const cookieElement = document.getElementById('cookie');
-    cookieElement.src = this.isFangMode ? this.fangImage : this.reedImage;
+  toggleMode(mode) {
+    let imageSrc;
 
-    // Update any existing particles
-    const particles = document.querySelectorAll('.particle');
-    particles.forEach(particle => {
-        particle.src = this.isFangMode  === true ? this.fangImage : this.reedImage;
-    });
+    // Determine image source based on mode
+    switch (mode) {
+        case "fang":
+            imageSrc =  this.fangImage 
+            break;
+        case "rosa":
 
-    const multipleFang = document.querySelectorAll('.icon_image');
-    multipleFang.forEach(fang => {
-        fang.src = this.isFangMode === true ? this.fangImage : this.reedImage;
-    });
-    // Update store item image if needed
-    const fangItem = this.storeItems.find(item => item.id === 'fangMultiplier');
-    if (fangItem) {
-        fangItem.image = this.isFangMode === true  ? "fang_coockie.gif" : "Reed.png";
-        fangImage.src =  this.isFangMode === true  ? "./img/fang_coockie.gif" : "./img/Reed.png";
+            imageSrc = "./img/rosa.webp";
+            break;
+        case "trish":
+
+            imageSrc = "./img/trish.png";
+            break;
+
+        case "olivia":
+
+              imageSrc = "./img/liv.webp";
+              break;
+              
+        case "reed":
+
+          imageSrc = "./img/Reed.png";
+          break;
+        case "normal":
+
+            imageSrc = "./img/nuget.webp";
+            break;
+        default:
+            console.warn("Invalid mode selected.");
+            return;
+          
     }
 
-    this.renderStore(); // Refresh the store display
+    // Update main cookie image
+    document.getElementById('cookie').src = imageSrc;
+
+    // Update particles if applicable
+    document.querySelectorAll('.particle').forEach(particle => {
+        particle.src = imageSrc;
+    });
+
+    // Update multiple fang images if in Fang mode
+   
+        // Update store item image if applicable
+        const fangItem = this.storeItems.find(item => item.id === 'fangMultiplier');
+        if (fangItem) {
+            fangItem.image = imageSrc.replace("./img/", "");
+            document.querySelector(".icon_image").src = imageSrc ;
+        }
+
+        this.renderStore(); // Refresh store if Fang mode changes
 }
-normalMode(){
-  const cookieElement = document.getElementById('cookie');
-  cookieElement.src = "./img/nuget.webp";
-}
+
 
   startWorkers() {
     setInterval(() => {
@@ -280,14 +305,35 @@ normalMode(){
 
 const game = new Game();
 cheet("4 2 0", function () {
-  game.toggleFangMode()
+  game.toggleMode("reed")
 
 });
 
 cheet("n u g g e t", function () {
-  game.normalMode()
+  game.toggleMode("normal")
 
 });
+
+cheet("t r i g g a", function () {
+  game.toggleMode("trish")
+
+});
+
+cheet("r o s a", function () {
+  game.toggleMode("rosa")
+
+});
+
+cheet("l i v", function () {
+  game.toggleMode("olivia")
+
+});
+
+cheet("f a n g", function () {
+  game.toggleMode("fang")
+
+});
+
 
 
 cheet("b a l d", function(){
