@@ -1,5 +1,4 @@
 
-
 class Game {
   constructor() {
     this.cookies = 0;
@@ -119,7 +118,7 @@ class Game {
     particle.style.top = y + "px";
 
     // Random movement values
-    const moveX = (Math.random() - 0.5) * 100;
+    const moveX = (Math.random() - 0.5) * 150;
     const moveY = -50 - Math.random() * 50; // Always move upward
     const rotation = (Math.random() - 0.5) * 360;
 
@@ -132,7 +131,7 @@ class Game {
     container.appendChild(particle);
 
     // Start animation
-    particle.style.animation = "fadeOut 0.5s ease-out forwards";
+    particle.style.animation = "fadeOut 300ms ease-out forwards";
 
     // Remove particle after animation
     setTimeout(() => {
@@ -162,7 +161,7 @@ class Game {
   clickCookie(event) {
     this.cookies += this.clickPower;
     this.playClickSound();
-    // this.createParticle(event);
+    this.createParticle(event);
     this.updateDisplay();
     this.saveGame();
   }
@@ -170,6 +169,7 @@ class Game {
   toggleFangMode() {
     this.isFangMode = !this.isFangMode;
     
+    const fangImage = document.querySelector(".icon_image"); // Select existing image
     // Update main cookie image
     const cookieElement = document.getElementById('cookie');
     cookieElement.src = this.isFangMode ? this.fangImage : this.reedImage;
@@ -177,15 +177,25 @@ class Game {
     // Update any existing particles
     const particles = document.querySelectorAll('.particle');
     particles.forEach(particle => {
-        particle.src = this.isFangMode ? this.fangImage : this.reedImage;
+        particle.src = this.isFangMode  === true ? this.fangImage : this.reedImage;
     });
 
+    const multipleFang = document.querySelectorAll('.icon_image');
+    multipleFang.forEach(fang => {
+        fang.src = this.isFangMode === true ? this.fangImage : this.reedImage;
+    });
     // Update store item image if needed
     const fangItem = this.storeItems.find(item => item.id === 'fangMultiplier');
     if (fangItem) {
-        fangItem.image = this.isFangMode ? "fang_coockie.gif" : "Reed.png";
+        fangItem.image = this.isFangMode === true  ? "fang_coockie.gif" : "Reed.png";
+        fangImage.src =  this.isFangMode === true  ? "./img/fang_coockie.gif" : "./img/Reed.png";
     }
+
     this.renderStore(); // Refresh the store display
+}
+normalMode(){
+  const cookieElement = document.getElementById('cookie');
+  cookieElement.src = "./img/nuget.webp";
 }
 
   startWorkers() {
@@ -271,14 +281,12 @@ class Game {
 const game = new Game();
 cheet("4 2 0", function () {
   game.toggleFangMode()
-  const main_container = document.querySelector("#main_container");
-  // Find all images with the cookie src and replace them
-  const images = main_container.querySelectorAll(
-    'img[src*="fang_coockie.gif"]'
-  );
-  images.forEach((img) => {
-    img.src = "./img/Reed.png";
-  });
+
+});
+
+cheet("n u g g e t", function () {
+  game.normalMode()
+
 });
 
 
