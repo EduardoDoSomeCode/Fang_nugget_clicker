@@ -1,4 +1,4 @@
-const cheet = require("./cheet.min");
+
 
 class Game {
   constructor() {
